@@ -54,7 +54,7 @@ export default FlightOptions = (props) => {
                             <View style={styles.cardsSecion3}>
                                 <View style={{flex:4}}>
                                     <Text style={{fontSize:wp("3%"), textAlign:"left"}}>
-                                        {item.stops} Stop . {item.duration} . {item.name}
+                                        {item.stops ? item.stops : "Non"} Stop . {item.duration} . {item.name}
                                     </Text>
                                 </View>
                                 <View  style={{flex:2}}>
@@ -113,7 +113,7 @@ export default FlightOptions = (props) => {
                                 
                                 <View style={{flex:4}}>
                                     <Text style={{fontSize:wp("3%"), textAlign:"left"}}>
-                                        {item.returnStop} Stop . {item.returnDuration} . {item.returnName}
+                                        {item.returnStops ? item.returnStops : "Non" } Stop . {item.returnDuration} . {item.returnName}
                                     </Text>
                                 </View>
                                 

@@ -14,7 +14,7 @@ export default HotelOptions = (props) => {
                 padding: 10
                 }}>
                 
-                <View style={[styles.cardWrapper, {height: slideHeight,  width: slideWidth}]}>
+                <View style={[styles.cardsWrapper, {height: slideHeight,  width: slideWidth}]}>
                  
                    <ImageBackground 
                         source={{uri:item.url}}
