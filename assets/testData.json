@@ -1,6 +1,6 @@
 {
 	"itinerary": {
-		"numberOfPersons": "1 Person",
+		"numberOfPersons": 1,
 		"onwardsDate": "July 25",
 		"returnDate": "July 27",
 		"onwardsTime": "8:30",
@@ -8,12 +8,13 @@
 		"flightType": "Return",
 		"departureCity": "Toronot, ON",
 		"destination": "Calgary, AB",
-		"numberOfRooms": "1 Room",
-		"hotelNights": "2 Nights",
-		"numberOfDays": "2 Days"
+		"numberOfRooms": 1,
+		"hotelNights": 2,
+		"numberOfDays": 2
 	},
 	"flightData": [
 		{
+			"id": 2112301734,
 			"name": "Westjet",
 			"stops": 1,
 			"duration": "4h 20m",
@@ -36,6 +37,7 @@
 			"returnLogo": "https://pbs.twimg.com/profile_images/1145701560049004544/uJB7ZUgL_400x400.jpg"
 		},
 		{
+			"id": 2112304174,
 			"name": "Swoop",
 			"stops": 0,
 			"duration": "2h 20m",
@@ -58,6 +60,7 @@
 			"returnLogo": "https://www.flyswoop.com/images/icon-swoop.png"
 		},
 		{
+			"id": 2112305174,
 			"name": "Westjet",
 			"stops": 0,
 			"duration": "2h 30m",
@@ -82,6 +85,7 @@
 	],
 	"hotelData": [
 		{
+			"id": 2116230174,
 			"name": "Alt Hotel Calgery East Village",
 			"deal": "Exclusive Deal",
 			"distance": "5 min walk to destination",
@@ -93,6 +97,7 @@
 			"url": "https://www.thefortress.lk/img/main.jpg"
 		},
 		{
+			"id": 2112730174,
 			"name": "Hotel Fern",
 			"deal": "Limited Deal",
 			"distance": "9 min walk to destination",
@@ -104,6 +109,7 @@
 			"url": "https://assets.tivolihotels.com/image/upload/q_auto,f_auto/media/minor/tivoli/images/hotels/tlag/tlag_homepage_top_image_pool.jpg"
 		},
 		{
+			"id": 2112301874,
 			"name": "Regency Resort",
 			"deal": "Great Deal",
 			"distance": "10 min walk to destination",
@@ -117,6 +123,7 @@
 	],
 	"carRentalData": [
 		{
+			"id": 2141230174,
 			"name": "Kia Rio",
 			"type": "Economy",
 			"Seats": 4,
@@ -130,6 +137,7 @@
 			"companyLogo": "https://www.enterprise.ca/content/dam/ecom/logo-enterprise.png"
 		},
 		{
+			"id": 2112301784,
 			"name": "Ford Edge",
 			"type": "Standard SUV",
 			"Seats": 4,
@@ -143,6 +151,7 @@
 			"companyLogo": "https://banner2.cleanpng.com/20180803/cyp/kisspng-logo-national-car-rental-brand-car-rental-finance-department-5b64542b950220.0688152515333018036103.jpg"
 		},
 		{
+			"id": 2211230174,
 			"name": "Malibu",
 			"type": "Full Size",
 			"Seats": 4,

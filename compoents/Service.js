@@ -16,19 +16,29 @@ export default function Service(props) {
         <Ionicons name="ios-bed" size={wp("4.5%")} color="gray" iconStyle="marginRight:5"/>,
         <MaterialCommunityIcons name="car" size={wp("4.5%")} color="gray" iconStyle="marginRight:5"/>,
     ];
-    const service = ["Flight", "Hotel", "Car"];
-    const {icon, tripDetails1, tripDetails2, rate, isCollapsed, _opensections, tripData, visible, _popUp} = props;
+    const services = ["Flight", "Hotel", "Car"];
+    const {
+        icon, 
+        tripDetails1, 
+        tripDetails2, 
+        rate, 
+        isCollapsed, 
+        tripData, 
+        visible, 
+        currentItem,
+        _opensections, 
+        _popUp, 
+        _currentSelection } = props;
+
     const bgColor = ["#5acbcb", "#F0F3F8", "#FFFFFF"];
 
     return (
         <View style={{backgroundColor:bgColor[icon]}}>
             <View style={[styles.serviceContainer, {backgroundColor: icon % 2 ? "#FFFFFF" : "#F0F3F8"}]}>
 
-            {/* section that is touchable which opens the collapsed section */}
                 <TouchableOpacity onPress={()=>{_opensections(icon)}}>
                     <View style={{padding:"1%", flexDirection:"row"}}>
                         
-                    {/* Service Type Icon and heading  */}
                         <View style={{flex:5, flexDirection:"row"}}>
                             <View style={styles.iconStyle}>
                                 {icons[icon]}
@@ -39,7 +49,7 @@ export default function Service(props) {
                                     fontWeight:isCollapsed ? "normal" : "bold", 
                                     color: isCollapsed ? "grey" : "black"}}
                                 >
-                                    {service[icon]}
+                                    {services[icon]}
                                 </Text>
                             </View>
                             <View style={{flex:4, alignSelf:"center"}}>
@@ -51,7 +61,6 @@ export default function Service(props) {
                             </View>
                         </View>
                         
-                    {/* total rate and options */}
                         <View style={{flex:3, flexDirection:"row",justifyContent:"flex-end"}}>
                             
                             <View style={{flex:3, alignSelf:"center", alignItems:"flex-end"}}>
@@ -63,6 +72,7 @@ export default function Service(props) {
                                     C$ {rate}
                                 </Text>
                             </View>
+
                             <Dialog
                                 visible={visible || false}
                                 onTouchOutside={()=>{_popUp(false)}}
@@ -73,19 +83,26 @@ export default function Service(props) {
                                     </Text>
                                 </DialogContent>
                             </Dialog>
+
                             <TouchableOpacity style={styles.iconStyle} onPress={()=>{_popUp(true)}}>
                                 <Ionicons name="md-more" size={wp("5%")} color="lightgrey" /> 
                             </TouchableOpacity>
+                            
                         </View>
                     </View>
                 </TouchableOpacity>
                 
-                {/* collapsed section which opens after a touch to the respective section*/}
                 <Collapsible collapsed={isCollapsed}>
 
                     <BubbleOptions  icon = {icon} />
 
-                    <OptionCards  icon = {icon} tripData = {tripData}/>
+                    <OptionCards  
+                            icon = {icon} 
+                            tripData = {tripData} 
+                            service = {services[icon]} 
+                            currentItem = {currentItem}
+                            _currentSelection = {_currentSelection}
+                            />
 
                     <BookingBubbles  icon = {icon} />
 

@@ -1,18 +1,20 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import * as data from '../assets/testData.json';
-import Service from "./Service";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import Service from "./Service";
+import * as data from '../assets/testData.json';
+import {setItem, multiGet} from "./DeviceStorage";
+
 
 export default class Selections extends Component {
     constructor(){
         super();
         this.state = {
             itinerary: data.itinerary,
-            flightRate: 650,
-            hotelRate: 129,
-            carRate: 129,
+            currentFlight: {},
+            currentHotel: {},
+            currentCar: {},
             bookmarked: false,
             isCollapsed: [],
             flightData: data.flightData,
@@ -22,9 +24,23 @@ export default class Selections extends Component {
         }
     }
     componentDidMount = () =>{
+        let flightData, hotelData, carData; 
         setTimeout(() => {
             this.setState({
                 isCollapsed : [false, true, true]
+            })
+            multiGet(["Flight","Hotel","Car"])
+            .then((result)=>{
+                flightData = JSON.parse(result[0][1]);
+                hotelData = JSON.parse(result[1][1]);
+                carData = JSON.parse(result[2][1]);
+            })
+            .then(()=>{
+                this.setState({
+                    currentFlight: flightData || data.flightData[0],
+                    currentHotel: hotelData || data.hotelData[0],
+                    currentCar: carData || data.carRentalData[0]
+                })
             })
         }, 1);
     }
@@ -47,8 +63,28 @@ export default class Selections extends Component {
             visible : value
         })
     }
+    _currentSelection = (service ,item) =>{
+        if(service === "Flight") {
+            this.setState({currentFlight: item});
+        }
+        else if(service === "Car") {
+            this.setState({currentCar: item})
+        }
+        else {this.setState({currentHotel: item})
+        }
+        setItem(service, JSON.stringify(item));
+    }
     render() {
-        const {itinerary, hotelData, carRentalData, flightData} = this.state
+        const {itinerary, hotelData, carRentalData, flightData, currentCar, currentFlight, currentHotel} = this.state
+        
+        const persons = `${itinerary.numberOfPersons} Person${ itinerary.numberOfPersons === 1 ?'' : 's' }`;
+        const rooms = `${itinerary.numberOfRooms} Room${ itinerary.numberOfRooms === 1 ?'' : 's' }`;
+        const nights = `${itinerary.hotelNights} Night${ itinerary.hotelNights === 1 ?'' : 's' }`;
+        const carDays = `${itinerary.numberOfDays} Day${ itinerary.numberOfDays === 1 ?'' : 's' }`;
+        const flightRate = (( currentFlight.rate + currentFlight.returnRate ) * itinerary.numberOfPersons) || 0;
+        const carRate = (currentCar.ratePerDay * itinerary.numberOfDays) || 0;
+        const hotelRate = (currentHotel.ratePerNight * itinerary.numberOfRooms * itinerary.hotelNights) || 0;
+         
         return (
             <View style={styles.wrapper}>
                 {/* itinerary head with details of dates and locations */}
@@ -87,37 +123,43 @@ export default class Selections extends Component {
                 {/* section containing the individual flights hotel and car details  */}
                 <View style={styles.itinerarySections}>
                     <Service
-                        _opensections = {this._opensections}
                         isCollapsed={this.state.isCollapsed[0]}
                         icon = {0}
                         tripDetails1={itinerary.flightType}
-                        tripDetails2={itinerary.numberOfPersons}
-                        rate={342}
+                        tripDetails2={persons}
+                        rate={flightRate}
                         tripData = {flightData}
-                        _popUp = {this._popUp}
+                        currentItem = {currentFlight}
                         visible  = {this.state.visible}
+                        _opensections = {this._opensections}
+                        _popUp = {this._popUp}
+                        _currentSelection = {this._currentSelection}
                         />
                     <Service 
-                        _opensections = {this._opensections}
                         isCollapsed={this.state.isCollapsed[1]}
                         icon = {1}
-                        tripDetails1={itinerary.hotelNights}
-                        tripDetails2={itinerary.numberOfRooms}
-                        rate={326}
+                        tripDetails1={nights}
+                        tripDetails2={rooms}
+                        rate={hotelRate}
+                        currentItem = {currentHotel}
                         tripData={hotelData}
-                        _popUp = {this._popUp}
                         visible  = {this.state.popUp}
+                        _opensections = {this._opensections}
+                        _popUp = {this._popUp}
+                        _currentSelection = {this._currentSelection}
                         />
                     <Service 
-                        _opensections = {this._opensections}
                         isCollapsed={this.state.isCollapsed[2]}
                         icon = {2}
-                        tripDetails1={itinerary.numberOfDays}
+                        tripDetails1={carDays}
                         tripDetails2={""}
-                        rate={88}
+                        rate={carRate}
+                        currentItem = {currentCar}
                         tripData={carRentalData}
+                        visible  = {this.state.popUp}                        
+                        _currentSelection = {this._currentSelection}
                         _popUp = {this._popUp}
-                        visible  = {this.state.popUp}
+                        _opensections = {this._opensections}
                         />
                 </View>
 
@@ -134,7 +176,7 @@ export default class Selections extends Component {
                         {/* trip total */}
                         <View style={[styles.overviewContainer, {flex:3, justifyContent:"center"}]}>
                             <Text style={styles.totalText}>
-                                {"     "}C$ 756
+                                {"     "}C$ {(carRate + hotelRate + flightRate) || 0 }
                             </Text>
                         </View>
 

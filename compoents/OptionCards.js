@@ -13,13 +13,15 @@ const slideWidth = wp("80%")
 const slideHeight = hp("32%")
 const itemWidth = slideWidth + horizontalMargin * 2;
 const itemHeight = slideHeight + horizontalMargin * 4;
-// for(var i = 0; i < 3; i++) {
-//   Items.push(i)
-// }
 
 export default function OptionCards (props) {
-  const {icon, tripData} = props;
-  const Items = tripData;
+
+  const {icon, tripData, service, currentItem, _currentSelection} = props;
+  const items = tripData;
+  let firstItem = 0;
+  items.forEach((e,i)=>{
+    if(e.id === currentItem.id){ firstItem = i }
+  })
   _renderItem = ({ item }) => {
       if(icon === 0 ){
         return ( <FlightOptions item={item} itemHeight={itemHeight} itemWidth={itemWidth} slideHeight={slideHeight} slideWidth={slideWidth} horizontalMargin={horizontalMargin}/> )
@@ -34,13 +36,18 @@ export default function OptionCards (props) {
           <CarOptions item={item} itemHeight={itemHeight} itemWidth={itemWidth} slideHeight={slideHeight} slideWidth={slideWidth} horizontalMargin={horizontalMargin}/>
         )
       }
-  }
+   }
+
     return (
       <View style={styles.container}>
         <Carousel
-          data={Items || []}
+          firstItem = {firstItem}
+          data={items || []}
           itemWidth={itemWidth}
           sliderWidth={sliderWidth}
+          onSnapToItem={(index)=>{
+            _currentSelection(service, items[index])
+          }}
           activeSlideAlignment='center'
           inactiveSlideOpacity = {1}
           inactiveSlideScale = {1}
