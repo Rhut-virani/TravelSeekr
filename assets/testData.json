@@ -1,17 +1,21 @@
 {
-	"itinerary": {
-		"numberOfPersons": 1,
-		"onwardsDate": "July 25",
-		"returnDate": "July 27",
-		"onwardsTime": "8:30",
-		"returnTime": "8:30",
-		"flightType": "Return",
-		"departureCity": "Toronot, ON",
-		"destination": "Calgary, AB",
-		"numberOfRooms": 1,
-		"hotelNights": 2,
-		"numberOfDays": 2
-	},
+	"itinerary": [
+		{
+			"onwardsDate": "July 25",
+			"returnDate": "July 27",
+			"onwardsTime": "8:30",
+			"returnTime": "8:30",
+			"flightType": "Return",
+			"departureCity": "Toronot, ON",
+			"destination": "Calgary, AB"
+		},
+		{
+			"numberOfPersons": 1,
+			"numberOfRooms": 1,
+			"hotelNights": 2,
+			"numberOfDays": 2
+		}
+	],
 	"flightData": [
 		{
 			"id": 2112301734,
