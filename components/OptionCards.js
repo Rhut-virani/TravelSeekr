@@ -25,41 +25,20 @@ export default function OptionCards(props) {
 			firstItem = i;
 		}
 	});
+
+	const components = [FlightOptions, HotelOptions, CarOptions];
 	_renderItem = ({ item }) => {
-		if (icon === 0) {
-			return (
-				<FlightOptions
-					item={item}
-					itemHeight={itemHeight}
-					itemWidth={itemWidth}
-					slideHeight={slideHeight}
-					slideWidth={slideWidth}
-					horizontalMargin={horizontalMargin}
-				/>
-			);
-		} else if (icon === 1) {
-			return (
-				<HotelOptions
-					item={item}
-					itemHeight={itemHeight}
-					itemWidth={itemWidth}
-					slideHeight={slideHeight}
-					slideWidth={slideWidth}
-					horizontalMargin={horizontalMargin}
-				/>
-			);
-		} else {
-			return (
-				<CarOptions
-					item={item}
-					itemHeight={itemHeight}
-					itemWidth={itemWidth}
-					slideHeight={slideHeight}
-					slideWidth={slideWidth}
-					horizontalMargin={horizontalMargin}
-				/>
-			);
-		}
+		const Component = components[icon];
+		return (
+			<Component
+				item={item}
+				itemHeight={itemHeight}
+				itemWidth={itemWidth}
+				slideHeight={slideHeight}
+				slideWidth={slideWidth}
+				horizontalMargin={horizontalMargin}
+			/>
+		);
 	};
 	return (
 		<View style={styles.container}>
